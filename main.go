@@ -11,6 +11,7 @@ import (
 	"k8s.io/client-go/util/homedir"
 	"os"
 	"path/filepath"
+	"time"
 )
 
 func main() {
@@ -76,6 +77,7 @@ func main() {
 			for _, pod := range selectedPods {
 				fmt.Printf("Deleting pod %s\n", pod.GetName())
 				err := clientset.CoreV1().Pods(pod.GetNamespace()).Delete(context.TODO(), pod.GetName(), metav1.DeleteOptions{})
+				time.Sleep(1 * time.Second)
 				if err != nil {
 					fmt.Printf("Error deleting pod %s: %s\n", pod.GetName(), err.Error())
 				}
